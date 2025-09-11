@@ -1,0 +1,24 @@
+{
+  "name": "project-mgm",
+  "version": "1.0.0",
+  "description": "project management backend",
+  "keywords": [
+    "backend",
+    "API"
+  ],
+  "homepage": "https://github.com/iamdhiraj69/project-management-backend#readme",
+  "bugs": {
+    "url": "https://github.com/iamdhiraj69/project-management-backend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamdhiraj69/project-management-backend.git"
+  },
+  "license": "ISC",
+  "author": "Dhiraj",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  }
+}
