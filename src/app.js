@@ -25,6 +25,13 @@ import authRouter from "./routes/auth.route.js";
 app.use("/api/v1/healthcheck", healthCheckRouter);
 app.use("/api/v1/auth", authRouter);
 
+
+// middleware error handler
+
+import { errorHandler } from "./middlewares/error.middleware.js";
+app.use(errorHandler);
+
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
