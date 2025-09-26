@@ -32,4 +32,22 @@ const userRegisterValidator = () => {
   ];
 };
 
-export { userRegisterValidator };
+const userLoginValidator = () => {
+  return [
+    body("email")
+      .isEmail()
+      .trim()
+      .notEmpty()
+      .withMessage("Email is required")
+      .isLowercase()
+      .withMessage("Email must be lowercase"),
+    body("password")
+      .trim()
+      .notEmpty()
+      .withMessage("Password is required")
+      .isLength({ min: 8 })
+      .withMessage("Password must be at least 8 characters long"),
+  ];
+};
+
+export { userRegisterValidator, userLoginValidator };
