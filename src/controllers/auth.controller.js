@@ -98,20 +98,21 @@ const login = asyncHandler(async (req, res) => {
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
-  await User.findByIdAndUpdate(req.user._id, {
-    $set: {
-      refreshToken: null
-  
+  await User.findByIdAndUpdate(
+    req.user._id,
+    {
+      $set: {
+        refreshToken: null,
+      },
     },
-  },
-  {
+    {
       new: true,
-    
-    });
+    },
+  );
   const options = {
     httpsOnly: true,
-    secure: true
-  }
+    secure: true,
+  };
   return res
     .status(200)
     .clearCookie("accessToken", options)
@@ -119,4 +120,36 @@ const logoutUser = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, null, "User logged out successfully"));
 });
 
-export { registerUser, login, logoutUser };
+const getCurrentUser = asyncHandler(async (req, res) => {
+  return res
+    .status(200)
+    .json(new ApiResponse(200, req.user, "User fetched successfully"));
+});
+
+const verifyEmail = asyncHandler(async (req, res) => {
+  const { verificationToken } = req.params;
+  if (!verificationToken) {
+    throw new ApiError(400, "Invalid or expired token");
+  }
+  let hashedToken = crypto
+    .createHash("sha256")
+    .update(verificationToken)
+    .digest("hex");
+
+  const user = await User.findOne({
+    emailVerificationToken: hashedToken,
+    emailVerificationExpiry: { $gt: Date.now() },
+  });
+  if (!user) {
+    throw new ApiError(400, "Invalid or expired token");
+  }
+  user.isEmailVerified = true;
+  user.emailVerificationToken = null;
+  user.emailVerificationExpiry = null;
+  await user.save({ validateBeforeSave: false });
+  return res
+    .status(200)
+    .json(new ApiResponse(200, null, "Email verified successfully"));
+});
+
+export { registerUser, login, logoutUser, getCurrentUser, verifyEmail };
