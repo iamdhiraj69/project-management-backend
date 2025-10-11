@@ -237,7 +237,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
   }
 });
 
-const forgetPasswordRequest = asyncHandler(async (req, res) => {
+const forgotPasswordRequest = asyncHandler(async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
@@ -315,7 +315,7 @@ export {
   verifyEmail,
   resendEmailVerification,
   refreshAccessToken,
-  forgetPasswordRequest,
+  forgotPasswordRequest,
   resetForgotPassword,
   changeCurrentPassword,
 };
