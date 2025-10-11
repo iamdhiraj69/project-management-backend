@@ -44,10 +44,10 @@ const userSchema = new Schema(
     refreshToken: {
       type: String,
     },
-    forgotPasswordToken: {
+    forgetPasswordToken: {
       type: String,
     },
-    forgotPasswordExpiry: {
+    forgetPasswordExpiry: {
       type: Date,
     },
     emailVerificationToken: {
